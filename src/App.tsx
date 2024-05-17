@@ -4,30 +4,126 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="container mt-4 vh-100">
+        {/* Title */}
+        <div className="row">
+          <div className="col">
+            <h1 className="text-center">ToDoList</h1>
+          </div>
+        </div>
+
+        {/* Task Creation Button and Frustration Panel */}
+        <div className="row mt-4">
+          <div className="col-md-6">
+            <button className="btn btn-primary">Create New Task</button>
+          </div>
+          <div className="col-md-6 text-right">
+            <span className="h5">Frustration Level: 5 😟</span>
+          </div>
+        </div>
+
+        {/* Task Table */}
+        <div className="row mt-4 v-100">
+          <div className="col-12 table-container v-100">
+            <table className="table table-striped v-100">
+              <thead>
+                <tr>
+                  <th>Task Order</th>
+                  <th>Task Description</th>
+                  <th>Priority</th>
+                  <th>Story Points</th>
+                </tr>
+              </thead>
+              <tbody className="vh-100">
+                <tr>
+                  <td>1</td>
+                  <td>Complete the project documentation</td>
+                  <td>High</td>
+                  <td>5</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Implement authentication</td>
+                  <td>Moderate</td>
+                  <td>8</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Implement authentication</td>
+                  <td>Moderate</td>
+                  <td>8</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Implement authentication</td>
+                  <td>Moderate</td>
+                  <td>8</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Implement authentication</td>
+                  <td>Moderate</td>
+                  <td>8</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Implement authentication</td>
+                  <td>Moderate</td>
+                  <td>8</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Implement authentication</td>
+                  <td>Moderate</td>
+                  <td>8</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Implement authentication</td>
+                  <td>Moderate</td>
+                  <td>8</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Implement authentication</td>
+                  <td>Moderate</td>
+                  <td>8</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Implement authentication</td>
+                  <td>Moderate</td>
+                  <td>8</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Implement authentication</td>
+                  <td>Moderate</td>
+                  <td>8</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Implement authentication</td>
+                  <td>Moderate</td>
+                  <td>8</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Implement authentication</td>
+                  <td>Moderate</td>
+                  <td>8</td>
+                </tr>
+
+                {/* Additional tasks here */}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      
     </>
   )
 }
