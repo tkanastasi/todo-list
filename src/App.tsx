@@ -2,6 +2,19 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { Priority, Task } from './types'
+
+const TaskList: Task[] = [
+    { description: "Tidy my room" 
+    , priority: 'Moderate'
+    , storyPoints: 5 }
+  , { description: "Go shopping"
+    , priority: 'Moderate'
+    , storyPoints: 3 }
+  , { description: "Cook breakfast"
+    , priority: 'High'
+    , storyPoints: 1 }  
+];
 
 function App() {
 
@@ -35,19 +48,14 @@ function App() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Complete the project documentation</td>
-                  <td>High</td>
-                  <td>5</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Implement authentication</td>
-                  <td>Moderate</td>
-                  <td>8</td>
-                </tr>
-                {/* Additional tasks here */}
+                {TaskList.map((task, idx) => (
+                  <tr>
+                    <td>{idx}</td>
+                    <td>{task.description}</td>
+                    <td>{task.priority}</td>
+                    <td>{task.storyPoints}</td>
+                   </tr>
+                ))}
               </tbody>
             </table>
           </div>
