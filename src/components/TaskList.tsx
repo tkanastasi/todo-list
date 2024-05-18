@@ -3,18 +3,21 @@ import React, { useState } from 'react'
 // TODO App.css is a really good place?
 import '../App.css'
 
-import { Priority, Task } from './types'
+import { Priority, Task } from './../types'
 
 const initialTaskList: Task[] = [
     { description: "Tidy my room" 
-    , priority: 'Moderate'
+    , priority: Priority.Low
     , storyPoints: 5 }
   , { description: "Go shopping"
-    , priority: 'Moderate'
+    , priority: Priority.High
     , storyPoints: 3 }
   , { description: "Cook breakfast"
-    , priority: 'High'
+    , priority: Priority.High
     , storyPoints: 1 }  
+  , { description: "Meet friends"
+    , priority: Priority.Moderate
+    , storyPoints: 4 }
 ];
 
 export function TaskList() {

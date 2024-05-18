@@ -1,6 +1,9 @@
 // import React from 'react'
+import { Priority } from '../types'
 
 export function ModalTaskEditor() {
+  const priorityEntries = Object.entries(Priority) as [string, Priority][];
+
   return (
     <div className="modal show d-block" id="taskModal" tabIndex={-1} aria-labelledby="taskModalLabel" aria-hidden="true">
       <div className="modal-dialog">
@@ -13,14 +16,19 @@ export function ModalTaskEditor() {
             <form>
               <div className="mb-3">
                 <label htmlFor="taskDescription" className="form-label">Task Description</label>
-                <input type="text" className="form-control" id="taskDescription" placeholder="Enter task description" />
+                <textarea 
+                  className="form-control" 
+                  id="taskDescription" 
+                  placeholder="Enter task description" 
+                  rows={3}
+                />
               </div>
               <div className="mb-3">
                 <label htmlFor="taskPriority" className="form-label">Priority</label>
                 <select className="form-select" id="taskPriority">
-                  <option value="High">High</option>
-                  <option value="Medium">Medium</option>
-                  <option value="Low">Low</option>
+                  {priorityEntries.map(([key, value]) => (
+                    <option value={key}>{value}</option>
+                  ))}
                 </select>
               </div>
               <div className="mb-3">
