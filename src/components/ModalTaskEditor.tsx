@@ -1,11 +1,23 @@
 // import React from 'react'
 import { Priority } from '../types'
+import { forwardRef, useImperativeHandle, useState } from 'react'
 
-export function ModalTaskEditor() {
+export const ModalTaskEditor = forwardRef((_, ref) => {
+  const [visibilityState, setVisibilityState] = useState(true);
   const priorityEntries = Object.entries(Priority) as [string, Priority][];
 
+  const hide = () => {
+    setVisibilityState(false);
+  };
+
+  useImperativeHandle(ref, () => ({
+    openDialog() {
+      setVisibilityState(true);
+    }
+  }));
+
   return (
-    <div className="modal show d-block" id="taskModal" tabIndex={-1} aria-labelledby="taskModalLabel" aria-hidden="true">
+    <div className={`modal ${visibilityState ? 'show d-block' : 'fade'}`} id="taskModal" tabIndex={-1} aria-labelledby="taskModalLabel" aria-hidden="true">
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
@@ -38,11 +50,11 @@ export function ModalTaskEditor() {
             </form>
           </div>
           <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={hide}>Cancel</button>
             <button type="button" className="btn btn-primary">Save Changes</button>
           </div>
         </div>
       </div>
     </div>
   )
-}
+});
