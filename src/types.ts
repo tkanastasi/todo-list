@@ -1,7 +1,7 @@
 export enum Priority {
-  Low = 'Low',
-  Moderate = 'Moderate',
-  High = 'High'
+  Low = '🟢',
+  Medium = '🟠',
+  High = '🔴'
 }
 
 export type Task = {

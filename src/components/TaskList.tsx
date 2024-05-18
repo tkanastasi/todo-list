@@ -5,25 +5,13 @@ import '../App.css'
 
 import { Priority, Task } from './../types'
 import { ModalTaskEditor } from './ModalTaskEditor';
-
-const initialTaskList: Task[] = [
-    { description: "Tidy my room" 
-    , priority: Priority.Low
-    , storyPoints: 5 }
-  , { description: "Go shopping"
-    , priority: Priority.High
-    , storyPoints: 3 }
-  , { description: "Cook breakfast"
-    , priority: Priority.High
-    , storyPoints: 1 }  
-  , { description: "Meet friends"
-    , priority: Priority.Moderate
-    , storyPoints: 4 }
-];
+import { initialTaskList } from '../taskDataset';
 
 export function TaskList() {
   const [taskList, editTaskList] = useState<Task[]>(initialTaskList)
+
   const taskEditorRef = useRef(null);
+
   const editTask = () => {
     taskEditorRef.current?.openDialog();
   }
