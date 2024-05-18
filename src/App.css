@@ -10,6 +10,17 @@ body {
 }
 
 
+.table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.table thead th {
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 1;
+}
 
 // #root {
 //   max-width: 1280px;
