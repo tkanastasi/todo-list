@@ -12,9 +12,15 @@ export function TaskList() {
 
   const taskEditorRef = useRef(null);
 
-  const editTask = () => {
-    taskEditorRef.current?.openDialog();
+  const createTask = () => {
+    taskEditorRef.current?.createTask();
   }
+
+  const createTaskDone = (task: Task) => {
+    editTaskList(lst => [...lst, task])
+  };
+
+  const createTaskDiscard = () => {}; 
   
   return (
     <>
@@ -22,7 +28,7 @@ export function TaskList() {
         {/* Task Creation Button and Frustration Panel */}
         <div className="row mt-4">
           <div className="col-md-6">
-            <button className="btn btn-primary" onClick={editTask}>Create New Task</button>
+            <button className="btn btn-primary" onClick={createTask}>Create New Task</button>
           </div>
         </div>
 
@@ -57,7 +63,7 @@ export function TaskList() {
             <span className="h5">Frustration Level: 5 😟</span>
           </div>
         </div>
-        <ModalTaskEditor ref={taskEditorRef}/>
+        <ModalTaskEditor ref={taskEditorRef} done={createTaskDone} discard={createTaskDiscard}/>
       </div>
       
     </>
