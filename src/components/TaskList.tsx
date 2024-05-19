@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 
 // TODO App.css is a really good place?
 import '../App.css'
@@ -18,18 +18,31 @@ const compareTask: (task1: Task, task2: Task) => number = (() => {
   });
 })();
 
-
 export function TaskList() {
   const [taskList, setTaskList] = useState<Task[]>(initialTaskList)
+  const [taskFocus, setTaskFocus] = useState<Task|null>(null);
 
   const taskEditorRef = useRef(null);
+  const tbodyRef = useRef<HTMLTableSectionElement>(null);
 
   const createTask = () => {
     taskEditorRef.current?.createTask();
   }
 
+  useEffect(() => {
+    if (taskFocus) {
+      const row = tbodyRef.current?.querySelector(`#task-${taskFocus.id}`)!;
+      row.classList.add('highlight');
+      row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => {
+        row.classList.remove('highlight');
+      }, 2000); // Duration of the highlight animation
+    }
+  }, [taskFocus]);
+
   const createTaskDone = (task: Task) => {
     setTaskList(lst => [...lst, task])
+    setTaskFocus(task);
   };
 
   const createTaskDiscard = () => {}; 
@@ -56,9 +69,9 @@ export function TaskList() {
                   <th>Story Points</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody ref={tbodyRef}>
                 {taskList.sort(compareTask).map((task, idx) => (
-                  <tr>
+                  <tr key={task.id} id={`task-${task.id}`}>
                     <td>{idx}</td>
                     <td>{task.description}</td>
                     <td>{task.priority}</td>

@@ -22,6 +22,19 @@ body {
   z-index: 1;
 }
 
+@keyframes borderHighlight {
+  0% {
+    border: 2px solid red;
+  }
+  100% {
+    border: 2px solid transparent;
+  }
+}
+
+.table-container table tbody tr.highlight {
+  animation: borderHighlight 1s ease-in-out;
+}
+
 // #root {
 //   max-width: 1280px;
 //   margin: 0 auto;
