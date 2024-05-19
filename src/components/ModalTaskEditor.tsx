@@ -14,8 +14,8 @@ type DescriptionFail = {
 
 type CheckFieldResult = true | DescriptionFail;
 
-function checkFields(description: string): CheckFieldResult {
-  if (description.trim().length === 0) {
+function checkFields(formState: FormState): CheckFieldResult {
+  if (formState.description.trim().length === 0) {
     return { kind: 'DescriptionFail', message: "Enter at least one symbol here"}
   }
 
@@ -24,19 +24,30 @@ function checkFields(description: string): CheckFieldResult {
 
 const storyPointOptions = [1, 2, 3, 5, 8, 13];
 
+type FormState = {
+  description: string;
+  priority: Priority;
+  storyPoints: number;
+}
+
+const nullFormState: FormState = {
+    description: "",
+    priority: Priority.Low,
+    storyPoints: storyPointOptions[0]
+}
+
 export const ModalTaskEditor = forwardRef((props: CreateTask, ref) => {
   const [visibilityState, setVisibilityState] = useState(false);
-  const [description, setDescription] = useState('');
-  const [priority, setPriority] = useState<Priority>(Priority.Low);
-  const [storyPoints, setStoryPoints] = useState<number>(storyPointOptions[0]);
+  const [formState, setFormState] = useState<FormState>(nullFormState);
 
   const priorityEntries = Object.entries(Priority) as [string, Priority][];
 
   const dialogTitle = "New Task";
   
-  const checkFieldResult = checkFields(description)
+  const checkFieldResult = checkFields(formState)
 
   const hide = () => {
+    setFormState(nullFormState);
     setVisibilityState(false);
   };
 
@@ -47,9 +58,9 @@ export const ModalTaskEditor = forwardRef((props: CreateTask, ref) => {
 
   const save = () => {
     const task: Task = {
-      description,
-      priority,
-      storyPoints
+      description: formState.description,
+      priority: formState.priority,
+      storyPoints: formState.storyPoints
     };
 
     hide();
@@ -79,9 +90,9 @@ export const ModalTaskEditor = forwardRef((props: CreateTask, ref) => {
                   id="taskDescription" 
                   placeholder={checkFieldResult !== true && checkFieldResult.kind === 'DescriptionFail' ? checkFieldResult.message : ""} 
                   rows={3}
-                  value={description}
+                  value={formState.description}
                   onChange={(e) => {
-                    setDescription(e.target.value);
+                    setFormState(s => ({...s, description: e.target.value}));
                   }}
                 />
               </div>
@@ -90,8 +101,8 @@ export const ModalTaskEditor = forwardRef((props: CreateTask, ref) => {
                 <select 
                   className="form-select" 
                   id="taskPriority"
-                  value={priority}
-                  onChange={(e) => setPriority(e.target.value as Priority)}
+                  value={formState.priority}
+                  onChange={(e) => setFormState(s => ({...s, priority: e.target.value as Priority}))}
                 >
                   {priorityEntries.map(([key, value]) => (
                     <option value={value}>{value} {key}</option>
@@ -105,9 +116,9 @@ export const ModalTaskEditor = forwardRef((props: CreateTask, ref) => {
                     <button
                       type="button"
                       key={point}
-                      className={`btn btn-outline-primary me-2 ${storyPoints === point ? 'active' : ''}`}
+                      className={`btn btn-outline-primary me-2 ${formState.storyPoints === point ? 'active' : ''}`}
                       onClick={() => {
-                        setStoryPoints(point);
+                        setFormState(s => ({...s, storyPoints: point}));
                       }}
                     >
                       {point}
