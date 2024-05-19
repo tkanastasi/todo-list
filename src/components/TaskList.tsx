@@ -39,6 +39,16 @@ export function TaskList() {
     setTaskEditorMode(d);
   };
 
+  // const editTask = (taskId: number) => {
+  //   const d: TaskEditorMode = {
+  //     kind: 'EditTaskMode',
+  //     task: 
+  //   }
+
+
+    
+  // };
+  
   useEffect(() => {
     if (taskFocus) {
       const row = tbodyRef.current?.querySelector(`#task-${taskFocus.id}`)!;
@@ -46,7 +56,7 @@ export function TaskList() {
       row.scrollIntoView({ behavior: 'smooth', block: 'center' });
       setTimeout(() => {
         row.classList.remove('highlight');
-      }, 2000); // Duration of the highlight animation
+      }, 2000);
     }
   }, [taskFocus]);
 
@@ -74,7 +84,7 @@ export function TaskList() {
               </thead>
               <tbody ref={tbodyRef}>
                 {taskList.sort(compareTask).map((task, idx) => (
-                  <tr key={task.id} id={`task-${task.id}`}>
+                  <tr key={task.id} id={`task-${task.id}`} onClick={() => { editTask(task.id) }}>
                     <td>{idx}</td>
                     <td>{task.description}</td>
                     <td>{task.priority}</td>

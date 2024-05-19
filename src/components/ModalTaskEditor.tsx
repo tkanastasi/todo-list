@@ -38,7 +38,8 @@ type CreateTaskMode = {
 
 type EditTaskMode = {
   kind: 'EditTaskMode';
-  delete: (t: Task) => void;
+  task: Task;
+  delete: () => void;
   save: (t: Task) => void;
 }
 
@@ -54,7 +55,8 @@ type TaskEditorProps = {
 }
 
 export const ModalTaskEditor: React.FC<TaskEditorProps> = ({ taskEditorMode }) => {
-  const [formState, setFormState] = useState<FormState>(nullFormState);
+  const [formState, setFormState] = useState<FormState>(taskEditorMode.kind === 'EditTaskMode' ? 
+                                                          (taskEditorMode.task as FormState) : nullFormState);
 
   const priorityEntries = Object.entries(Priority) as [string, Priority][];
   const dialogTitle = taskEditorMode.kind === 'CreateTaskMode' ? 'New Task' : 'Edit Task';
@@ -64,10 +66,10 @@ export const ModalTaskEditor: React.FC<TaskEditorProps> = ({ taskEditorMode }) =
     taskEditorMode.hide();
     taskEditorMode.cancel();
   };
-
+  
   const save = () => {
     const task: Task = {
-      id: Date.now(),
+      id: taskEditorMode.kind === 'EditTaskMode' ? taskEditorMode.task.id : Date.now(),
       description: formState.description,
       priority: formState.priority,
       storyPoints: formState.storyPoints
@@ -81,6 +83,15 @@ export const ModalTaskEditor: React.FC<TaskEditorProps> = ({ taskEditorMode }) =
       taskEditorMode.save(task);
     }
   };
+
+  const deleteTask = () => {
+    if (taskEditorMode.kind !== 'EditTaskMode') {
+      return
+    }
+    
+    taskEditorMode.delete();
+    taskEditorMode.hide();
+  }
 
   return (
     <div className="modal show d-block" id="taskModal" tabIndex={-1} aria-labelledby="taskModalLabel" aria-hidden="true">
@@ -140,6 +151,8 @@ export const ModalTaskEditor: React.FC<TaskEditorProps> = ({ taskEditorMode }) =
           <div className="modal-footer">
             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={cancel}>Cancel</button>
             <button type="button" className="btn btn-primary" onClick={save} disabled={checkFieldResult !== true}>Save</button>
+            { taskEditorMode.kind === 'EditTaskMode' && 
+              <button type="button" className="btn btn-danger" onClick={deleteTask}>Delete</button> }
           </div>
         </div>
       </div>
