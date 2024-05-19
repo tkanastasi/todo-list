@@ -58,6 +58,7 @@ export const ModalTaskEditor = forwardRef((props: CreateTask, ref) => {
 
   const save = () => {
     const task: Task = {
+      id: Date.now(),
       description: formState.description,
       priority: formState.priority,
       storyPoints: formState.storyPoints

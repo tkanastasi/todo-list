@@ -7,8 +7,20 @@ import { Priority, Task } from './../types'
 import { ModalTaskEditor } from './ModalTaskEditor';
 import { initialTaskList } from '../taskDataset';
 
+const compareTask: (task1: Task, task2: Task) => number = (() => {
+  const priorityValues: string[] = Object.values(Priority);
+  const priorityOrder = Object.fromEntries(priorityValues.map((val, i) => [val, i]));
+  return ((task1: Task, task2: Task) => {
+    if (task1.priority != task2.priority) {
+      return priorityOrder[task2.priority] - priorityOrder[task1.priority];
+    }
+    return task1.storyPoints - task2.storyPoints;    
+  });
+})();
+
+
 export function TaskList() {
-  const [taskList, editTaskList] = useState<Task[]>(initialTaskList)
+  const [taskList, setTaskList] = useState<Task[]>(initialTaskList)
 
   const taskEditorRef = useRef(null);
 
@@ -17,7 +29,7 @@ export function TaskList() {
   }
 
   const createTaskDone = (task: Task) => {
-    editTaskList(lst => [...lst, task])
+    setTaskList(lst => [...lst, task])
   };
 
   const createTaskDiscard = () => {}; 
@@ -45,7 +57,7 @@ export function TaskList() {
                 </tr>
               </thead>
               <tbody>
-                {taskList.map((task, idx) => (
+                {taskList.sort(compareTask).map((task, idx) => (
                   <tr>
                     <td>{idx}</td>
                     <td>{task.description}</td>

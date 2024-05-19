@@ -35,4 +35,4 @@ export const initialTaskList: Task[] = [
   // { description: "Write code", priority: Priority.Medium, storyPoints: 7 },
   // { description: "Organize files", priority: Priority.Low, storyPoints: 3 },
   // { description: "Cook dinner", priority: Priority.High, storyPoints: 4 }
-];
+].map((x, i) => ({...x, id: i}));

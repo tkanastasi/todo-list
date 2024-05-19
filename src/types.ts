@@ -1,10 +1,11 @@
 export enum Priority {
-  Low = '🟢',
-  Medium = '🟠',
-  High = '🔴'
+  Low = 'L',
+  Medium = 'M',
+  High = 'H'
 }
 
 export type Task = {
+  id: number; 
   description: string;
   priority: Priority;
   storyPoints: number;
