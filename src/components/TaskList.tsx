@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import '../App.css'
 
 import { Priority, Task } from './../types'
-import { ModalTaskEditor } from './ModalTaskEditor';
+import { ModalTaskEditor, TaskEditorMode } from './ModalTaskEditor';
 import { initialTaskList } from '../taskDataset';
 
 const compareTask: (task1: Task, task2: Task) => number = (() => {
@@ -21,13 +21,23 @@ const compareTask: (task1: Task, task2: Task) => number = (() => {
 export function TaskList() {
   const [taskList, setTaskList] = useState<Task[]>(initialTaskList)
   const [taskFocus, setTaskFocus] = useState<Task|null>(null);
+  const [taskEditorMode, setTaskEditorMode] = useState<TaskEditorMode|null>(null);
 
-  const taskEditorRef = useRef(null);
   const tbodyRef = useRef<HTMLTableSectionElement>(null);
 
   const createTask = () => {
-    taskEditorRef.current?.createTask();
-  }
+    const d: TaskEditorMode = {
+      kind: 'CreateTaskMode',
+      create: ((task: Task) => {
+        setTaskList(lst => [...lst, task])
+        setTaskFocus(task);        
+      }),
+      hide: (() => setTaskEditorMode(null)),
+      cancel: (() => {return})
+    };
+    
+    setTaskEditorMode(d);
+  };
 
   useEffect(() => {
     if (taskFocus) {
@@ -40,13 +50,6 @@ export function TaskList() {
     }
   }, [taskFocus]);
 
-  const createTaskDone = (task: Task) => {
-    setTaskList(lst => [...lst, task])
-    setTaskFocus(task);
-  };
-
-  const createTaskDiscard = () => {}; 
-  
   return (
     <>
       <div className="container mt-4">
@@ -88,9 +91,9 @@ export function TaskList() {
             <span className="h5">Frustration Level: 5 😟</span>
           </div>
         </div>
-        <ModalTaskEditor ref={taskEditorRef} done={createTaskDone} discard={createTaskDiscard}/>
+        {taskEditorMode && 
+          <ModalTaskEditor taskEditorMode={taskEditorMode}/>}
       </div>
-      
     </>
   )
 }

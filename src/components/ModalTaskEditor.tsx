@@ -1,11 +1,6 @@
 // import React from 'react'
 import { Priority, Task } from '../types'
-import { forwardRef, useImperativeHandle, useState } from 'react'
-
-type CreateTask = {
-  done: (task: Task) => void;
-  discard: () => void;
-}
+import { useState } from 'react'
 
 type DescriptionFail = {
   kind: 'DescriptionFail';
@@ -36,24 +31,38 @@ const nullFormState: FormState = {
     storyPoints: storyPointOptions[0]
 }
 
-export const ModalTaskEditor = forwardRef((props: CreateTask, ref) => {
-  const [visibilityState, setVisibilityState] = useState(false);
+type CreateTaskMode = {
+  kind: 'CreateTaskMode'
+  create: (t: Task) => void;
+}
+
+type EditTaskMode = {
+  kind: 'EditTaskMode';
+  delete: (t: Task) => void;
+  save: (t: Task) => void;
+}
+
+type BaseT = {
+  hide: () => void;
+  cancel: () => void;
+}
+
+export type TaskEditorMode = (CreateTaskMode | EditTaskMode) & BaseT
+
+type TaskEditorProps = {
+  taskEditorMode: TaskEditorMode
+}
+
+export const ModalTaskEditor: React.FC<TaskEditorProps> = ({ taskEditorMode }) => {
   const [formState, setFormState] = useState<FormState>(nullFormState);
 
   const priorityEntries = Object.entries(Priority) as [string, Priority][];
-
-  const dialogTitle = "New Task";
-  
+  const dialogTitle = taskEditorMode.kind === 'CreateTaskMode' ? 'New Task' : 'Edit Task';
   const checkFieldResult = checkFields(formState)
 
-  const hide = () => {
-    setFormState(nullFormState);
-    setVisibilityState(false);
-  };
-
   const cancel = () => {
-    hide();
-    props.discard();
+    taskEditorMode.hide();
+    taskEditorMode.cancel();
   };
 
   const save = () => {
@@ -64,18 +73,17 @@ export const ModalTaskEditor = forwardRef((props: CreateTask, ref) => {
       storyPoints: formState.storyPoints
     };
 
-    hide();
-    props.done(task);
+    taskEditorMode.hide();
+
+    if (taskEditorMode.kind === 'CreateTaskMode') {
+      taskEditorMode.create(task);
+    } else if (taskEditorMode.kind === 'EditTaskMode') {
+      taskEditorMode.save(task);
+    }
   };
 
-  useImperativeHandle(ref, () => ({
-    createTask() {
-      setVisibilityState(true);
-    }
-  }));
-
   return (
-    <div className={`modal ${visibilityState ? 'show d-block' : 'fade'}`} id="taskModal" tabIndex={-1} aria-labelledby="taskModalLabel" aria-hidden="true">
+    <div className="modal show d-block" id="taskModal" tabIndex={-1} aria-labelledby="taskModalLabel" aria-hidden="true">
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
@@ -137,4 +145,4 @@ export const ModalTaskEditor = forwardRef((props: CreateTask, ref) => {
       </div>
     </div>
   )
-});
+}
