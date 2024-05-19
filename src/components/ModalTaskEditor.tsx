@@ -22,11 +22,13 @@ function checkFields(description: string): CheckFieldResult {
   return true;
 }
 
+const storyPointOptions = [1, 2, 3, 5, 8, 13];
+
 export const ModalTaskEditor = forwardRef((props: CreateTask, ref) => {
   const [visibilityState, setVisibilityState] = useState(false);
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState<Priority>(Priority.Low);
-  const [storyPoints, setStoryPoints] = useState<number>(1);
+  const [storyPoints, setStoryPoints] = useState<number>(storyPointOptions[0]);
 
   const priorityEntries = Object.entries(Priority) as [string, Priority][];
 
@@ -98,16 +100,20 @@ export const ModalTaskEditor = forwardRef((props: CreateTask, ref) => {
               </div>
               <div className="mb-3">
                 <label htmlFor="taskStoryPoints" className="form-label">Story Points</label>
-                <input 
-                  type="number" 
-                  className="form-control" 
-                  id="taskStoryPoints" 
-                  placeholder="Enter story points"
-                  value={storyPoints}
-                  onChange={(e) => {
-                    setStoryPoints(Number(e.target.value));
-                  }}
-                />
+                <div>
+                  {storyPointOptions.map((point) => (
+                    <button
+                      type="button"
+                      key={point}
+                      className={`btn btn-outline-primary me-2 ${storyPoints === point ? 'active' : ''}`}
+                      onClick={() => {
+                        setStoryPoints(point);
+                      }}
+                    >
+                      {point}
+                    </button>
+                  ))}
+                </div>
               </div>
             </form>
           </div>
