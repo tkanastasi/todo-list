@@ -39,7 +39,7 @@ type CreateTaskMode = {
 type EditTaskMode = {
   kind: 'EditTaskMode';
   task: Task;
-  delete: () => void;
+  deleteTask: () => void;
   save: (t: Task) => void;
 }
 
@@ -89,7 +89,7 @@ export const ModalTaskEditor: React.FC<TaskEditorProps> = ({ taskEditorMode }) =
       return
     }
     
-    taskEditorMode.delete();
+    taskEditorMode.deleteTask();
     taskEditorMode.hide();
   }
 

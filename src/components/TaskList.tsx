@@ -39,15 +39,33 @@ export function TaskList() {
     setTaskEditorMode(d);
   };
 
-  // const editTask = (taskId: number) => {
-  //   const d: TaskEditorMode = {
-  //     kind: 'EditTaskMode',
-  //     task: 
-  //   }
+  const editTask = (taskId: number) => {
+    // console.log(`Edit Task: ${taskId}`);
+    const lst = taskList.filter(task => task.id === taskId);
+    if (lst.length != 1) {
+      return
+    }
 
+    const task = lst[0];
+    const d: TaskEditorMode = {
+      kind: 'EditTaskMode',
+      task: task,
+      deleteTask: () => {
+        const newTasks = taskList.filter(t => (t.id !== taskId));
+        setTaskList(newTasks);
+      },
+      save: (update: Task) => {
+        const newTasks = taskList.map(t => (t.id === taskId ? update : t));
+        setTaskList(newTasks);
+        setTaskFocus(update);
+      },
+      hide: (() => setTaskEditorMode(null)),
+      cancel: (() => {return})      
+    };
 
-    
-  // };
+    setTaskEditorMode(d);
+
+  };
   
   useEffect(() => {
     if (taskFocus) {
