@@ -64,10 +64,14 @@ export const FrustrationLevel: React.FC<FrustrationLevelProps> = ({ temp }) => {
       <span style={{ fontSize: `${0.9 * baseFontSize}em` }}>
         Frustration Level:
       </span>
-      {emojiIdx !== undefined && (
+      {emojiIdx !== undefined ? (
         <span style={{ fontSize: `${baseFontSize}em` }}>
           {frustrationEmojis[emojiIdx]}
         </span>
+      ) : (
+        <div className="spinner-border" role="status" style={{ fontSize: `${baseFontSize}em` }}>
+          <span className="sr-only"/>
+        </div>
       )}
       {frustrationLevel.toString().split('').slice(0, 60).map((digit, index) => (
           <span key={index} style={{ fontSize: `${baseFontSize * Math.exp(-Math.floor(index / 1) * 0.08)}em` }}>
