@@ -5,6 +5,7 @@ import '../App.css'
 
 import { Priority, Task } from './../types'
 import { ModalTaskEditor, TaskEditorMode } from './ModalTaskEditor';
+import { FrustrationLevel } from './FrustrationLevel';
 import { initialTaskList } from '../taskDataset';
 
 const compareTask: (task1: Task, task2: Task) => number = (() => {
@@ -17,6 +18,7 @@ const compareTask: (task1: Task, task2: Task) => number = (() => {
     return task1.storyPoints - task2.storyPoints;    
   });
 })();
+
 
 export function TaskList() {
   const [taskList, setTaskList] = useState<Task[]>(initialTaskList)
@@ -40,7 +42,6 @@ export function TaskList() {
   };
 
   const editTask = (taskId: number) => {
-    // console.log(`Edit Task: ${taskId}`);
     const lst = taskList.filter(task => task.id === taskId);
     if (lst.length != 1) {
       return
@@ -91,7 +92,7 @@ export function TaskList() {
         {/* Task Table */}
         <div className="row mt-4">
           <div className="table-container">
-            <table className="table table-striped">
+            <table className="table table-striped table-hover">
               <thead>
                 <tr>
                   <th>Task Order</th>
@@ -104,7 +105,7 @@ export function TaskList() {
                 {taskList.sort(compareTask).map((task, idx) => (
                   <tr key={task.id} id={`task-${task.id}`} onClick={() => { editTask(task.id) }}>
                     <td>{idx}</td>
-                    <td>{task.description}</td>
+                    <td className="truncate">{task.description}</td>
                     <td>{task.priority}</td>
                     <td>{task.storyPoints}</td>
                    </tr>
@@ -116,7 +117,7 @@ export function TaskList() {
 
         <div className="row mt-4">
           <div className="col-md-6 text-right">
-            <span className="h5">Frustration Level: 5 😟</span>
+            <FrustrationLevel temp={taskList.map(t => t.storyPoints).reduce((acc, v) => acc + v, 0)}/>
           </div>
         </div>
         {taskEditorMode && 

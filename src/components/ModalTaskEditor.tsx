@@ -125,7 +125,7 @@ export const ModalTaskEditor: React.FC<TaskEditorProps> = ({ taskEditorMode }) =
                   onChange={(e) => setFormState(s => ({...s, priority: e.target.value as Priority}))}
                 >
                   {priorityEntries.map(([key, value]) => (
-                    <option value={value}>{value} {key}</option>
+                    <option key={value} value={value}>{value} {key}</option>
                   ))}
                 </select>
               </div>
