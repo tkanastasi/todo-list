@@ -61,11 +61,11 @@ export const FrustrationLevel: React.FC<FrustrationLevelProps> = ({ temp }) => {
   
   return (
     <span>
-      <span key="emoji" style={{ fontSize: `${0.9 * baseFontSize}em` }}>
+      <span style={{ fontSize: `${0.9 * baseFontSize}em` }}>
         Frustration Level:
       </span>
       {emojiIdx !== undefined && (
-        <span key="emoji" style={{ fontSize: `${baseFontSize}em` }}>
+        <span style={{ fontSize: `${baseFontSize}em` }}>
           {frustrationEmojis[emojiIdx]}
         </span>
       )}
