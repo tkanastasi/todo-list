@@ -109,7 +109,8 @@ export const ModalTaskEditor: React.FC<TaskEditorProps> = ({ taskEditorMode }) =
                   className="form-control" 
                   id="taskDescription" 
                   placeholder={checkFieldResult !== true && checkFieldResult.kind === 'DescriptionFail' ? checkFieldResult.message : ""} 
-                  rows={3}
+                  rows={4}
+                  autoFocus={ taskEditorMode.kind === 'CreateTaskMode' }
                   value={formState.description}
                   onChange={(e) => {
                     setFormState(s => ({...s, description: e.target.value}));
