@@ -152,7 +152,7 @@ export const ModalTaskEditor: React.FC<TaskEditorProps> = ({ taskEditorMode }) =
           </div>
           <div className="modal-footer">
             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={cancel}>Cancel</button>
-            <button type="button" className="btn btn-primary" onClick={save} disabled={checkFieldResult !== true}>Save</button>
+            <button type="button" className="btn btn-success" onClick={save} disabled={checkFieldResult !== true}>Save</button>
             { taskEditorMode.kind === 'EditTaskMode' && 
               <button type="button" className="btn btn-danger" onClick={deleteTask}>Delete</button> }
           </div>

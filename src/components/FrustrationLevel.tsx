@@ -67,8 +67,8 @@ export const FrustrationLevel: React.FC<FrustrationLevelProps> = ({ temp }) => {
   return (
     <div className="container-fluid" style={{fontSize: "1.8em"}}>
       <div className="row">
-        <div className="col">
-          Frustration level
+        <div className="col" id="FL">
+          Frustration level:
         </div>
       </div>
       <div className="row">

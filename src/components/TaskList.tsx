@@ -113,10 +113,10 @@ export function TaskList() {
                       <td>{task.priority}</td>
                       <td>{task.storyPoints}</td>
                       <td>
-                        <img src="edit.png" 
+                        <img src="edit-v2.png" 
                              style={{width: '20px'}} 
                              onClick={() => editTask(task.id)}/>
-                        <img src="delete.png" 
+                        <img src="delete-v2.png" 
                              style={{width: '20px', marginLeft: '10px'}}
                              onClick={() => deleteTask(task.id)}/>
                       </td>
