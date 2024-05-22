@@ -1,45 +1,9 @@
 // import React from 'react'
 import { Priority, Task, BTask } from '../types'
 import { useState } from 'react'
-
-type DescriptionFail = {
-  kind: 'DescriptionFail';
-  message: string
-}
-
-type CheckFieldResult = true | DescriptionFail;
-
-function checkFields(formState: BTask): CheckFieldResult {
-  if (formState.description.trim().length === 0) {
-    return { kind: 'DescriptionFail', message: "Enter at least one symbol here"}
-  }
-
-  return true;
-}
+import { TaskEditorProps, checkFields } from './modalTaskEditor';
 
 const storyPointOptions = [1, 2, 3, 5, 8, 13];
-
-type CreateTaskMode = {
-  kind: 'CreateTaskMode'
-  create: (t: Task) => void;
-}
-
-type EditTaskMode = {
-  kind: 'EditTaskMode';
-  task: Task;
-  deleteTask: () => void;
-  save: (t: Task) => void;
-}
-
-type BaseT = {
-  hide: () => void;
-}
-
-export type TaskEditorMode = (CreateTaskMode | EditTaskMode) & BaseT
-
-type TaskEditorProps = {
-  taskEditorMode: TaskEditorMode
-}
 
 export const ModalTaskEditor: React.FC<TaskEditorProps> = ({ taskEditorMode }) => {
   const [formState, setFormState] = useState<BTask>(taskEditorMode.kind === 'EditTaskMode' ? 
