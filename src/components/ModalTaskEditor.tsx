@@ -118,16 +118,18 @@ export const ModalTaskEditor: React.FC<TaskEditorProps> = ({ taskEditorMode }) =
               </div>
               <div className="mb-3">
                 <label htmlFor="taskPriority" className="form-label">Priority</label>
-                <select 
-                  className="form-select" 
-                  id="taskPriority"
-                  value={formState.priority}
-                  onChange={(e) => setFormState(s => ({...s, priority: e.target.value as Priority}))}
-                >
+                <div>
                   {priorityEntries.map(([key, value]) => (
-                    <option key={value} value={value}>{value} {key}</option>
+                    <button
+                      type="button"
+                      key={value}
+                      className={`btn btn-outline-primary me-2 ${formState.priority === value ? 'active' : ''}`}
+                      onClick={() => setFormState(s => ({...s, priority: value}))}
+                    >
+                      {key} {value}
+                    </button>
                   ))}
-                </select>
+                </div>
               </div>
               <div className="mb-3">
                 <label htmlFor="taskStoryPoints" className="form-label">Story Points</label>
