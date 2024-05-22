@@ -1,5 +1,5 @@
 // import React from 'react'
-import { Priority, Task } from '../types'
+import { Priority, Task, BTask } from '../types'
 import { useState } from 'react'
 
 type DescriptionFail = {
@@ -9,7 +9,7 @@ type DescriptionFail = {
 
 type CheckFieldResult = true | DescriptionFail;
 
-function checkFields(formState: FormState): CheckFieldResult {
+function checkFields(formState: BTask): CheckFieldResult {
   if (formState.description.trim().length === 0) {
     return { kind: 'DescriptionFail', message: "Enter at least one symbol here"}
   }
@@ -18,18 +18,6 @@ function checkFields(formState: FormState): CheckFieldResult {
 }
 
 const storyPointOptions = [1, 2, 3, 5, 8, 13];
-
-type FormState = {
-  description: string;
-  priority: Priority;
-  storyPoints: number;
-}
-
-const nullFormState: FormState = {
-    description: "",
-    priority: Priority.Low,
-    storyPoints: storyPointOptions[0]
-}
 
 type CreateTaskMode = {
   kind: 'CreateTaskMode'
@@ -45,7 +33,6 @@ type EditTaskMode = {
 
 type BaseT = {
   hide: () => void;
-  cancel: () => void;
 }
 
 export type TaskEditorMode = (CreateTaskMode | EditTaskMode) & BaseT
@@ -55,8 +42,12 @@ type TaskEditorProps = {
 }
 
 export const ModalTaskEditor: React.FC<TaskEditorProps> = ({ taskEditorMode }) => {
-  const [formState, setFormState] = useState<FormState>(taskEditorMode.kind === 'EditTaskMode' ? 
-                                                          (taskEditorMode.task as FormState) : nullFormState);
+  const [formState, setFormState] = useState<BTask>(taskEditorMode.kind === 'EditTaskMode' ? 
+                                                     (taskEditorMode.task as BTask) :
+                                                     { description: "",
+                                                       priority: Priority.Low,
+                                                       storyPoints: storyPointOptions[0]
+                                                     });
 
   const priorityEntries = Object.entries(Priority) as [string, Priority][];
   const dialogTitle = taskEditorMode.kind === 'CreateTaskMode' ? 'New Task' : 'Edit Task';
@@ -64,7 +55,6 @@ export const ModalTaskEditor: React.FC<TaskEditorProps> = ({ taskEditorMode }) =
 
   const cancel = () => {
     taskEditorMode.hide();
-    taskEditorMode.cancel();
   };
   
   const save = () => {

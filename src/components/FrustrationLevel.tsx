@@ -74,13 +74,13 @@ export const FrustrationLevel: React.FC<FrustrationLevelProps> = ({ temp }) => {
       <div className="row">
         <div className="col">
         {frustrationLevel.toString().split('').slice(0, 30).map((digit, index) => (
-            <span key={index} style={{ fontSize: `${Math.exp(-Math.floor(index / 1) * 0.09)}em` }}>
+            <span key={index} style={{ fontSize: `${Math.exp(-index * 0.09)}em` }}>
               {digit}
             </span>
         ))}
         </div>
       </div>
-      <div className="row justify-content-center">
+      <div className="row">
         <div className="col">
         {emojiIdx !== undefined ? (
             <img src={frustrationEmojis[emojiIdx]}/>

@@ -19,7 +19,6 @@ const compareTask: (task1: Task, task2: Task) => number = (() => {
   });
 })();
 
-
 export function TaskList() {
   const [taskList, setTaskList] = useState<Task[]>(initialTaskList)
   const [taskFocus, setTaskFocus] = useState<Task|null>(null);
@@ -27,26 +26,27 @@ export function TaskList() {
 
   const tbodyRef = useRef<HTMLTableSectionElement>(null);
 
-  const createTask = () => {
+  const deleteTask = (taskId: number) => {
+    const newTasks = taskList.filter(t => (t.id !== taskId));
+    setTaskList(newTasks);
+  }
+
+  const hideEditorWindow = { hide: () => setTaskEditorMode(null) }
+  
+  const setCreateMode = () => {
     const d: TaskEditorMode = {
       kind: 'CreateTaskMode',
       create: ((task: Task) => {
         setTaskList(lst => [...lst, task])
         setTaskFocus(task);        
-      }),
-      hide: (() => setTaskEditorMode(null)),
-      cancel: (() => {return})
+      }), 
+      ...hideEditorWindow
     };
     
     setTaskEditorMode(d);
   };
 
-  const deleteTask = (taskId: number) => {
-    const newTasks = taskList.filter(t => (t.id !== taskId));
-    setTaskList(newTasks);
-  }
-  
-  const editTask = (taskId: number) => {
+  const setEditMode = (taskId: number) => {
     const lst = taskList.filter(task => task.id === taskId);
     if (lst.length != 1) {
       return
@@ -62,12 +62,10 @@ export function TaskList() {
         setTaskList(newTasks);
         setTaskFocus(update);
       },
-      hide: (() => setTaskEditorMode(null)),
-      cancel: (() => {return})      
+      ...hideEditorWindow
     };
 
     setTaskEditorMode(d);
-
   };
   
   useEffect(() => {
@@ -87,7 +85,7 @@ export function TaskList() {
         {/* Task Creation Button and Frustration Panel */}
         <div className="row">
           <div className="col">
-            <button className="btn btn-primary" onClick={createTask}>Create New Task</button>
+            <button className="btn btn-primary" onClick={setCreateMode}>Create New Task</button>
           </div>
         </div>
 
@@ -115,7 +113,7 @@ export function TaskList() {
                       <td>
                         <img src="edit-v2.png" 
                              style={{width: '20px'}} 
-                             onClick={() => editTask(task.id)}/>
+                             onClick={() => setEditMode(task.id)}/>
                         <img src="delete-v2.png" 
                              style={{width: '20px', marginLeft: '10px'}}
                              onClick={() => deleteTask(task.id)}/>

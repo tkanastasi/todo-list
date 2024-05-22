@@ -4,9 +4,14 @@ export enum Priority {
   High = 'H'
 }
 
-export type Task = {
-  id: number; 
+export type ID = {
+  id: number;
+}
+
+export type BTask = {
   description: string;
   priority: Priority;
   storyPoints: number;
-};
+}
+
+export type Task = ID & BTask
