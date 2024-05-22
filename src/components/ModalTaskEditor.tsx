@@ -1,13 +1,13 @@
 // import React from 'react'
-import { Priority, Task, BTask } from '../types'
-import { useState } from 'react'
-import { TaskEditorProps, checkFields } from './modalTaskEditor';
+import { Priority, BTask } from '../types'
+import React, { useState } from 'react'
+import { TaskEditorProps, checkFields, getActions } from './modalTaskEditor';
 
 const storyPointOptions = [1, 2, 3, 5, 8, 13];
 
 export const ModalTaskEditor: React.FC<TaskEditorProps> = ({ taskEditorMode }) => {
   const [formState, setFormState] = useState<BTask>(taskEditorMode.kind === 'EditTaskMode' ? 
-                                                     (taskEditorMode.task as BTask) :
+                                                     (taskEditorMode.task) :
                                                      { description: "",
                                                        priority: Priority.Low,
                                                        storyPoints: storyPointOptions[0]
@@ -16,36 +16,7 @@ export const ModalTaskEditor: React.FC<TaskEditorProps> = ({ taskEditorMode }) =
   const priorityEntries = Object.entries(Priority) as [string, Priority][];
   const dialogTitle = taskEditorMode.kind === 'CreateTaskMode' ? 'New Task' : 'Edit Task';
   const checkFieldResult = checkFields(formState)
-
-  const cancel = () => {
-    taskEditorMode.hide();
-  };
-  
-  const save = () => {
-    const task: Task = {
-      id: taskEditorMode.kind === 'EditTaskMode' ? taskEditorMode.task.id : Date.now(),
-      description: formState.description,
-      priority: formState.priority,
-      storyPoints: formState.storyPoints
-    };
-
-    taskEditorMode.hide();
-
-    if (taskEditorMode.kind === 'CreateTaskMode') {
-      taskEditorMode.create(task);
-    } else if (taskEditorMode.kind === 'EditTaskMode') {
-      taskEditorMode.save(task);
-    }
-  };
-
-  const deleteTask = () => {
-    if (taskEditorMode.kind !== 'EditTaskMode') {
-      return
-    }
-    
-    taskEditorMode.deleteTask();
-    taskEditorMode.hide();
-  }
+  const { cancel, save, deleteTask } = getActions(taskEditorMode, formState);
 
   return (
     <div className="modal show d-block" id="taskModal" tabIndex={-1} aria-labelledby="taskModalLabel" aria-hidden="true">
