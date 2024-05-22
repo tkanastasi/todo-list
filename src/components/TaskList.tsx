@@ -108,7 +108,10 @@ export function TaskList() {
                     <tr key={task.id} id={`task-${task.id}`}>
                       <td>{idx}</td>
                       <td className="truncate">{task.description}</td>
-                      <td>{task.priority}</td>
+                      <td>
+                        <img src={`${task.priority}.svg`}  
+                             style={{width: '20px'}}/>
+                      </td>
                       <td>{task.storyPoints}</td>
                       <td>
                         <img src="edit-v2.png" 

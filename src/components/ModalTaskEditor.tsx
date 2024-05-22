@@ -50,10 +50,10 @@ export const ModalTaskEditor: React.FC<TaskEditorProps> = ({ taskEditorMode }) =
                     <button
                       type="button"
                       key={value}
-                      className={`btn btn-outline-primary me-2 ${formState.priority === value ? 'active' : ''}`}
+                      className={`btn btn-outline-secondary me-2 ${formState.priority === value ? 'active' : ''}`}
                       onClick={() => setFormState(s => ({...s, priority: value}))}
                     >
-                      {key} {value}
+                      {key} <img src={`${value}.svg`} alt={value} style={{ width: '20px' }} />
                     </button>
                   ))}
                 </div>
@@ -65,7 +65,7 @@ export const ModalTaskEditor: React.FC<TaskEditorProps> = ({ taskEditorMode }) =
                     <button
                       type="button"
                       key={point}
-                      className={`btn btn-outline-primary me-2 ${formState.storyPoints === point ? 'active' : ''}`}
+                      className={`btn btn-outline-secondary me-2 ${formState.storyPoints === point ? 'active' : ''}`}
                       onClick={() => {
                         setFormState(s => ({...s, storyPoints: point}));
                       }}
