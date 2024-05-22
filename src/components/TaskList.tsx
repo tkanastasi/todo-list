@@ -4,7 +4,8 @@ import { useState, useRef, useEffect } from 'react'
 import '../App.css'
 
 import { Priority, Task } from './../types'
-import { ModalTaskEditor, TaskEditorMode } from './ModalTaskEditor';
+import { ModalTaskEditor } from './ModalTaskEditor';
+import { TaskEditorMode } from './modalTaskEditor';
 import { FrustrationLevel } from './FrustrationLevel';
 import { initialTaskList } from '../taskDataset';
 
