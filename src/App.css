@@ -1,17 +1,11 @@
-/* src/App.css */
-body {
-  overflow: hidden;
-}
-
 .table-container {
-  max-height: 400px; /* Adjust as needed */
-  // flex-grow: 1;
+  max-height: 600px; /* Adjust as needed */
   overflow-y: auto;
 }
 
 
 .table {
-  width: 100%;
+  min-width: 700px;
   table-layout: fixed;
 }
 
@@ -20,6 +14,26 @@ body {
   top: 0;
   background: white;
   z-index: 1;
+}
+
+.table thead th:nth-child(1) {
+  width: 10%;
+}
+
+.table thead th:nth-child(2) {
+  width: 60%;
+}
+
+.table thead th:nth-child(3) {
+  width: 10%;
+}
+
+.table thead th:nth-child(4) {
+  width: 10%;
+}
+
+.table thead th:nth-child(5) {
+  width: 10%;
 }
 
 @keyframes borderHighlight {
@@ -35,54 +49,8 @@ body {
   animation: borderHighlight 1s ease-in-out;
 }
 
-/* styles.css */
 .truncate {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 200px; /* Adjust the max-width as needed */
 }
-
-
-// #root {
-//   max-width: 1280px;
-//   margin: 0 auto;
-//   padding: 2rem;
-//   text-align: center;
-// }
-
-// .logo {
-//   height: 6em;
-//   padding: 1.5em;
-//   will-change: filter;
-//   transition: filter 300ms;
-// }
-// .logo:hover {
-//   filter: drop-shadow(0 0 2em #646cffaa);
-// }
-// .logo.react:hover {
-//   filter: drop-shadow(0 0 2em #61dafbaa);
-// }
-
-// @keyframes logo-spin {
-//   from {
-//     transform: rotate(0deg);
-//   }
-//   to {
-//     transform: rotate(360deg);
-//   }
-// }
-
-// @media (prefers-reduced-motion: no-preference) {
-//   a:nth-of-type(2) .logo {
-//     animation: logo-spin infinite 20s linear;
-//   }
-// }
-
-// .card {
-//   padding: 2em;
-// }
-
-// .read-the-docs {
-//   color: #888;
-// }

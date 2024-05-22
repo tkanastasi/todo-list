@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 // TODO App.css is a really good place?
 import '../App.css'
@@ -41,6 +41,11 @@ export function TaskList() {
     setTaskEditorMode(d);
   };
 
+  const deleteTask = (taskId: number) => {
+    const newTasks = taskList.filter(t => (t.id !== taskId));
+    setTaskList(newTasks);
+  }
+  
   const editTask = (taskId: number) => {
     const lst = taskList.filter(task => task.id === taskId);
     if (lst.length != 1) {
@@ -51,10 +56,7 @@ export function TaskList() {
     const d: TaskEditorMode = {
       kind: 'EditTaskMode',
       task: task,
-      deleteTask: () => {
-        const newTasks = taskList.filter(t => (t.id !== taskId));
-        setTaskList(newTasks);
-      },
+      deleteTask: () => deleteTask(taskId),
       save: (update: Task) => {
         const newTasks = taskList.map(t => (t.id === taskId ? update : t));
         setTaskList(newTasks);
@@ -81,47 +83,57 @@ export function TaskList() {
 
   return (
     <>
-      <div className="container mt-4">
+      <div>
         {/* Task Creation Button and Frustration Panel */}
-        <div className="row mt-4">
-          <div className="col-md-6">
+        <div className="row">
+          <div className="col">
             <button className="btn btn-primary" onClick={createTask}>Create New Task</button>
           </div>
         </div>
 
         {/* Task Table */}
-        <div className="row mt-4">
-          <div className="table-container">
-            <table className="table table-striped table-hover">
-              <thead>
-                <tr>
-                  <th>Task Order</th>
-                  <th>Task Description</th>
-                  <th>Priority</th>
-                  <th>Story Points</th>
-                </tr>
-              </thead>
-              <tbody ref={tbodyRef}>
-                {taskList.sort(compareTask).map((task, idx) => (
-                  <tr key={task.id} id={`task-${task.id}`} onClick={() => { editTask(task.id) }}>
-                    <td>{idx}</td>
-                    <td className="truncate">{task.description}</td>
-                    <td>{task.priority}</td>
-                    <td>{task.storyPoints}</td>
-                   </tr>
-                ))}
-              </tbody>
-            </table>
+        <div className="row">
+          <div className="col" style={{flexGrow: 1}}>
+            <div className="table-container">
+              <table className="table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Task Description</th>
+                    <th>Priority</th>
+                    <th>Story Points</th>
+                    <th>Edit/Delete</th>
+                  </tr>
+                </thead>
+                <tbody ref={tbodyRef}>
+                  {taskList.sort(compareTask).map((task, idx) => (
+                    <tr key={task.id} id={`task-${task.id}`}>
+                      <td>{idx}</td>
+                      <td className="truncate">{task.description}</td>
+                      <td>{task.priority}</td>
+                      <td>{task.storyPoints}</td>
+                      <td>
+                        <img src="edit.png" 
+                             style={{width: '20px'}} 
+                             onClick={() => editTask(task.id)}/>
+                        <img src="delete.png" 
+                             style={{width: '20px', marginLeft: '10px'}}
+                             onClick={() => deleteTask(task.id)}/>
+                      </td>
+                     </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
-
-        <div className="row mt-4">
-          <div className="col-md-6 text-right">
+          <div className="col" style={{flex: "0 0 300px"}}>
             <FrustrationLevel temp={taskList.map(t => t.storyPoints).reduce((acc, v) => acc + v, 0)}/>
           </div>
         </div>
+        <div>
         {taskEditorMode && 
           <ModalTaskEditor taskEditorMode={taskEditorMode}/>}
+        </div>
       </div>
     </>
   )

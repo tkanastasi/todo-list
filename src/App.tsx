@@ -4,14 +4,17 @@ import { TaskList } from './components/TaskList'
 function App() {
   return (
     <>
-      <div className="container mt-4">
-        {/* Title */}
-        <div className="row">
+      <div className="container-xxl">
+        <div className="row mt-2">
           <div className="col">
-            <h1 className="text-center">ToDoList</h1>
+            <h1>ToDo List</h1>
           </div>
         </div>
-        <TaskList/>
+        <div className="row mt-2">
+          <div className="col">
+            <TaskList />
+          </div>
+        </div>
       </div>
     </>
   )

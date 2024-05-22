@@ -20,7 +20,13 @@ function partialSums(numbers: number[]): number[] {
   return arr;
 }
 
-const frustrationEmojis: string[] = ["😊", "😐", "😣", "😫", "😱"];
+const frustrationEmojis: string[] = [
+  "frustration-1.png",
+  "frustration-2.png",
+  "frustration-3.png",
+  "frustration-4.png",
+  "frustration-5.png"
+];
 
 type FrustrationLevelProps = {
   temp: number
@@ -57,27 +63,32 @@ export const FrustrationLevel: React.FC<FrustrationLevelProps> = ({ temp }) => {
 
   const frustrationLevel = factorial(BigInt(temp));
   const emojiIdx = frustrationBounds?.reduce((idx, v) => (temp > v ? idx + 1 : idx), 0);
-  const baseFontSize = 2;
   
   return (
-    <span>
-      <span style={{ fontSize: `${0.6 * baseFontSize}em` }}>
-        Frustration level:
-      </span>
-      {emojiIdx !== undefined ? (
-        <span style={{ fontSize: `${baseFontSize}em` }}>
-          {frustrationEmojis[emojiIdx]}
-        </span>
-      ) : (
-        <div className="spinner-border" role="status" style={{ fontSize: `${baseFontSize}em` }}>
-          <span className="sr-only"/>
+    <div className="container-fluid" style={{fontSize: "1.8em"}}>
+      <div className="row">
+        <div className="col">
+          Frustration level
         </div>
-      )}
-      {frustrationLevel.toString().split('').slice(0, 60).map((digit, index) => (
-          <span key={index} style={{ fontSize: `${baseFontSize * Math.exp(-Math.floor(index / 1) * 0.08)}em` }}>
+      </div>
+      <div className="row">
+        <div className="col">
+        {frustrationLevel.toString().split('').slice(0, 30).map((digit, index) => (
+            <span key={index} style={{ fontSize: `${Math.exp(-Math.floor(index / 1) * 0.09)}em` }}>
               {digit}
-          </span>
-      ))}
-    </span>
+            </span>
+        ))}
+        </div>
+      </div>
+      <div className="row justify-content-center">
+        <div className="col">
+        {emojiIdx !== undefined ? (
+            <img src={frustrationEmojis[emojiIdx]}/>
+        ) : (
+          <div className="spinner-border" role="status"/>
+        )}
+        </div>
+      </div>
+    </div>
   );
 }
