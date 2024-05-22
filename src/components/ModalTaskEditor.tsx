@@ -1,7 +1,8 @@
 // import React from 'react'
 import { Priority, BTask } from '../types'
 import React, { useState } from 'react'
-import { TaskEditorProps, checkFields, getActions } from './modalTaskEditor';
+import { TaskEditorProps, checkFields, getActions } from './_modalTaskEditor';
+export * from './_modalTaskEditor'
 
 const storyPointOptions = [1, 2, 3, 5, 8, 13];
 
