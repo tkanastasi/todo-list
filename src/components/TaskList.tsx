@@ -3,21 +3,11 @@ import { useState, useRef, useEffect } from 'react'
 // TODO App.css is a really good place?
 import '../App.css'
 
-import { Priority, Task } from './../types'
+import { Task } from './../types'
 import { ModalTaskEditor, EditorMode } from './ModalTaskEditor';
 import { FrustrationLevel } from './FrustrationLevel';
 import { initialTaskList } from '../taskDataset';
-
-const compareTask: (task1: Task, task2: Task) => number = (() => {
-  const priorityValues: string[] = Object.values(Priority);
-  const priorityOrder = Object.fromEntries(priorityValues.map((val, i) => [val, i]));
-  return ((task1: Task, task2: Task) => {
-    if (task1.priority != task2.priority) {
-      return priorityOrder[task2.priority] - priorityOrder[task1.priority];
-    }
-    return task1.storyPoints - task2.storyPoints;    
-  });
-})();
+import { compareTask } from './_taskList';
 
 export function TaskList() {
   const [taskList, setTaskList] = useState<Task[]>(initialTaskList)
