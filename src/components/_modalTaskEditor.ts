@@ -43,35 +43,35 @@ export type EditorActions = {
   deleteTask: () => void;
 }
 
-export function getActions(taskEditorMode: EditorMode, formState: BTask): EditorActions {
+export function getActions(editorMode: EditorMode, formState: BTask): EditorActions {
   const cancel = () => {
-    taskEditorMode.hide();
+    editorMode.hide();
   };
   
   const save = () => {
     const task: Task = {
-      id: taskEditorMode.kind === 'EditTaskMode' ? taskEditorMode.task.id : Date.now(),
+      id: editorMode.kind === 'EditTaskMode' ? editorMode.task.id : Date.now(),
       description: formState.description,
       priority: formState.priority,
       storyPoints: formState.storyPoints
     };
 
-    taskEditorMode.hide();
+    editorMode.hide();
 
-    if (taskEditorMode.kind === 'CreateTaskMode') {
-      taskEditorMode.create(task);
-    } else if (taskEditorMode.kind === 'EditTaskMode') {
-      taskEditorMode.save(task);
+    if (editorMode.kind === 'CreateTaskMode') {
+      editorMode.create(task);
+    } else if (editorMode.kind === 'EditTaskMode') {
+      editorMode.save(task);
     }
   };
 
   const deleteTask = () => {
-    if (taskEditorMode.kind !== 'EditTaskMode') {
+    if (editorMode.kind !== 'EditTaskMode') {
       return
     }
     
-    taskEditorMode.deleteTask();
-    taskEditorMode.hide();
+    editorMode.deleteTask();
+    editorMode.hide();
   }
 
   return { cancel: cancel,
