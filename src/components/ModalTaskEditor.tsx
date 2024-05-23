@@ -22,15 +22,15 @@ export const ModalTaskEditor: React.FC<EditorProps> = ({ taskEditorMode }) => {
   return (
     <div className="modal show d-block" id="taskModal" tabIndex={-1} aria-labelledby="taskModalLabel" aria-hidden="true">
       <div className="modal-dialog">
-        <div className="modal-content">
+        <div className="modal-content bordered">
           <div className="modal-header">
-            <h5 className="modal-title" id="taskModalLabel">{dialogTitle}</h5>
+            <h5 className="modal-title bold" id="taskModalLabel">{dialogTitle}</h5>
             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={cancel}></button>
           </div>
           <div className="modal-body">
             <form>
               <div className="mb-3">
-                <label htmlFor="taskDescription" className="form-label">Task Description</label>
+                <label htmlFor="taskDescription" className="form-label bold">Task Description</label>
                 <textarea 
                   className="form-control" 
                   id="taskDescription" 
@@ -44,7 +44,7 @@ export const ModalTaskEditor: React.FC<EditorProps> = ({ taskEditorMode }) => {
                 />
               </div>
               <div className="mb-3">
-                <label htmlFor="taskPriority" className="form-label">Priority</label>
+                <label htmlFor="taskPriority" className="form-label bold">Priority</label>
                 <div>
                   {priorityEntries.map(([key, value]) => (
                     <button
@@ -59,7 +59,7 @@ export const ModalTaskEditor: React.FC<EditorProps> = ({ taskEditorMode }) => {
                 </div>
               </div>
               <div className="mb-3">
-                <label htmlFor="taskStoryPoints" className="form-label">Story Points</label>
+                <label htmlFor="taskStoryPoints" className="form-label bold">Story Points</label>
                 <div>
                   {storyPointOptions.map((point) => (
                     <button

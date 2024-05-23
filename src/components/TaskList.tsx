@@ -37,15 +37,15 @@ export function TaskList() {
         {/* Task Creation Button and Frustration Panel */}
         <div className="row">
           <div className="col">
-            <button className="btn btn-info" onClick={setCreateMode}>Create New Task</button>
+            <button className="btn btn-info bordered" onClick={setCreateMode}>Create New Task</button>
           </div>
         </div>
 
         {/* Task Table */}
-        <div className="row">
-          <div className="col" style={{flexGrow: 1}}>
-            <div className="table-container">
-              <table className="table table-striped table-hover">
+        <div className="row mt-3">
+          <div className="col flex-grow-1">
+            <div className="task-list-container bordered rounded">
+              <table className="table table-bordered task-list-table table-striped table-hover">
                 <thead>
                   <tr>
                     <th>#</th>
@@ -58,28 +58,28 @@ export function TaskList() {
                 <tbody ref={tbodyRef}>
                   {taskList.sort(compareTask).map((task, idx) => (
                     <tr key={task.id} id={`task-${task.id}`}>
-                      <td>{idx}</td>
+                      <td className="text-center">{idx + 1}</td>
                       <td className="truncate">{task.description}</td>
-                      <td>
+                      <td className="text-center">
                         <img src={`${task.priority}.svg`}  
                              style={{width: '20px'}}/>
                       </td>
-                      <td>{task.storyPoints}</td>
-                      <td>
-                        <img src="edit-v2.png" 
-                             style={{width: '20px'}} 
-                             onClick={() => setEditMode(task)}/>
-                        <img src="delete-v2.png" 
-                             style={{width: '20px', marginLeft: '10px'}}
-                             onClick={() => taskListActions.deleteTask(task)}/>
-                      </td>
+                      <td className="text-center">{task.storyPoints}</td>
+                        <td className="text-center">
+                            <img src="edit-v2.png" 
+                                 style={{width: '20px'}} 
+                                 onClick={() => setEditMode(task)}/>
+                            <img src="delete-v2.png" 
+                                 style={{width: '20px', marginLeft: '10px'}}
+                                 onClick={() => taskListActions.deleteTask(task)}/>
+                        </td>
                      </tr>
                   ))}
                 </tbody>
               </table>
             </div>
           </div>
-          <div className="col" style={{flex: "0 0 300px"}}>
+          <div className="col frustration-flex">
             <FrustrationLevel temp={taskList.map(t => t.storyPoints).reduce((acc, v) => acc + v, 0)}/>
           </div>
         </div>

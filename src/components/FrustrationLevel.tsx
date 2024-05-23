@@ -46,29 +46,25 @@ export const FrustrationLevel: React.FC<FrustrationLevelProps> = ({ temp }) => {
   const emojiIdx = frustrationBounds?.reduce((idx, v) => (temp > v ? idx + 1 : idx), 0);
   
   return (
-    <div className="container-fluid" style={{fontSize: "1.8em"}}>
-      <div className="row">
-        <div className="col" id="FL">
-          Frustration level:
-        </div>
+    <div className="frustration-container bordered rounded">
+      <div className="frustration-padding bold">
+        Frustration level:
       </div>
-      <div className="row">
-        <div className="col">
+      <div className="frustration-devider"/>
+      <div className="frustration-padding">
         {frustrationLevel.toString().split('').slice(0, 30).map((digit, index) => (
-            <span key={index} style={{ fontSize: `${Math.exp(-index * 0.09)}em` }}>
+            <span key={index} style={{ fontSize: `${Math.exp(-index * 0.06)}em` }}>
               {digit}
             </span>
         ))}
-        </div>
       </div>
-      <div className="row">
-        <div className="col">
+      <div className="frustration-devider"/>
+      <div className="frustration-image">
         {emojiIdx !== undefined ? (
             <img style={{ width: '200px' }} src={frustrationEmojis[emojiIdx]}/>
         ) : (
           <div className="spinner-border" role="status"/>
         )}
-        </div>
       </div>
     </div>
   );
