@@ -3,61 +3,23 @@ import { useState, useRef, useEffect } from 'react'
 // TODO App.css is a really good place?
 import '../App.css'
 
-import { Task } from './../types'
+import { Task, ID } from './../types'
 import { ModalTaskEditor, EditorMode } from './ModalTaskEditor';
 import { FrustrationLevel } from './FrustrationLevel';
 import { initialTaskList } from '../taskDataset';
-import { compareTask } from './_taskList';
+import { EditorModeSetters, TaskListActions, compareTask, getEditorModeSetters, getTaskListActions } from './_taskList';
 
 export function TaskList() {
   const [taskList, setTaskList] = useState<Task[]>(initialTaskList)
-  const [taskFocus, setTaskFocus] = useState<Task|null>(null);
+  const [taskFocus, setTaskFocus] = useState<ID|null>(null);
   const [taskEditorMode, setTaskEditorMode] = useState<EditorMode|null>(null);
 
-  const tbodyRef = useRef<HTMLTableSectionElement>(null);
-
-  const deleteTask = (taskId: number) => {
-    const newTasks = taskList.filter(t => (t.id !== taskId));
-    setTaskList(newTasks);
-  }
-
-  const hideEditorWindow = { hide: () => setTaskEditorMode(null) }
-  
-  const setCreateMode = () => {
-    const d: EditorMode = {
-      kind: 'CreateTaskMode',
-      create: ((task: Task) => {
-        setTaskList(lst => [...lst, task])
-        setTaskFocus(task);        
-      }), 
-      ...hideEditorWindow
-    };
+  const taskListActions: TaskListActions = getTaskListActions(taskList, setTaskList);
+  const {setCreateMode, setEditMode}: EditorModeSetters = getEditorModeSetters(taskListActions,
+                                                                    setTaskEditorMode,
+                                                                    setTaskFocus)
     
-    setTaskEditorMode(d);
-  };
-
-  const setEditMode = (taskId: number) => {
-    const lst = taskList.filter(task => task.id === taskId);
-    if (lst.length != 1) {
-      return
-    }
-
-    const task = lst[0];
-    const d: EditorMode = {
-      kind: 'EditTaskMode',
-      task: task,
-      deleteTask: () => deleteTask(taskId),
-      save: (update: Task) => {
-        const newTasks = taskList.map(t => (t.id === taskId ? update : t));
-        setTaskList(newTasks);
-        setTaskFocus(update);
-      },
-      ...hideEditorWindow
-    };
-
-    setTaskEditorMode(d);
-  };
-  
+  const tbodyRef = useRef<HTMLTableSectionElement>(null);
   useEffect(() => {
     if (taskFocus) {
       const row = tbodyRef.current?.querySelector(`#task-${taskFocus.id}`)!;
@@ -106,10 +68,10 @@ export function TaskList() {
                       <td>
                         <img src="edit-v2.png" 
                              style={{width: '20px'}} 
-                             onClick={() => setEditMode(task.id)}/>
+                             onClick={() => setEditMode(task)}/>
                         <img src="delete-v2.png" 
                              style={{width: '20px', marginLeft: '10px'}}
-                             onClick={() => deleteTask(task.id)}/>
+                             onClick={() => taskListActions.deleteTask(task)}/>
                       </td>
                      </tr>
                   ))}

@@ -9,14 +9,14 @@ export type CheckFieldResult = true | DescriptionFail;
 
 type CreateTaskMode = {
   kind: 'CreateTaskMode'
-  create: (t: Task) => void;
+  create: (t: BTask) => void;
 }
 
 type EditTaskMode = {
   kind: 'EditTaskMode';
   task: Task;
   deleteTask: () => void;
-  save: (t: Task) => void;
+  save: (update: BTask) => void;
 }
 
 type BaseT = {
@@ -49,8 +49,7 @@ export function getActions(editorMode: EditorMode, formState: BTask): EditorActi
   };
   
   const save = () => {
-    const task: Task = {
-      id: editorMode.kind === 'EditTaskMode' ? editorMode.task.id : Date.now(),
+    const task: BTask = {
       description: formState.description,
       priority: formState.priority,
       storyPoints: formState.storyPoints
