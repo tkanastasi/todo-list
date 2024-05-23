@@ -1,24 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-
-function factorial(n: bigint){
-  let acc = BigInt(1);
-  for (let i = BigInt(1); i <= n; i++) {
-    acc *= i;
-  }
-
-  return acc;
-}
-
-function partialSums(numbers: number[]): number[] {
-  let arr = [];
-
-  for (let acc = 0, i = 0; i < numbers.length; i++){
-    acc += numbers[i];
-    arr.push(acc);
-  }
-
-  return arr;
-}
+import { factorial, partialSums } from './_frustrationLevel';
 
 const frustrationEmojis: string[] = [
   "frustration-1-v2.webp",
