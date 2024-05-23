@@ -23,10 +23,10 @@ type BaseT = {
   hide: () => void;
 }
 
-export type TaskEditorMode = (CreateTaskMode | EditTaskMode) & BaseT
+export type EditorMode = (CreateTaskMode | EditTaskMode) & BaseT
 
-export type TaskEditorProps = {
-  taskEditorMode: TaskEditorMode
+export type EditorProps = {
+  taskEditorMode: EditorMode
 }
 
 export function checkFields(formState: BTask): CheckFieldResult {
@@ -37,13 +37,13 @@ export function checkFields(formState: BTask): CheckFieldResult {
   return true;
 }
 
-export type Actions = {
+export type EditorActions = {
   cancel: () => void;
   save: () => void;
   deleteTask: () => void;
 }
 
-export function getActions(taskEditorMode: TaskEditorMode, formState: BTask): Actions {
+export function getActions(taskEditorMode: EditorMode, formState: BTask): EditorActions {
   const cancel = () => {
     taskEditorMode.hide();
   };

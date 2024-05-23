@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import '../App.css'
 
 import { Priority, Task } from './../types'
-import { ModalTaskEditor, TaskEditorMode } from './ModalTaskEditor';
+import { ModalTaskEditor, EditorMode } from './ModalTaskEditor';
 import { FrustrationLevel } from './FrustrationLevel';
 import { initialTaskList } from '../taskDataset';
 
@@ -22,7 +22,7 @@ const compareTask: (task1: Task, task2: Task) => number = (() => {
 export function TaskList() {
   const [taskList, setTaskList] = useState<Task[]>(initialTaskList)
   const [taskFocus, setTaskFocus] = useState<Task|null>(null);
-  const [taskEditorMode, setTaskEditorMode] = useState<TaskEditorMode|null>(null);
+  const [taskEditorMode, setTaskEditorMode] = useState<EditorMode|null>(null);
 
   const tbodyRef = useRef<HTMLTableSectionElement>(null);
 
@@ -34,7 +34,7 @@ export function TaskList() {
   const hideEditorWindow = { hide: () => setTaskEditorMode(null) }
   
   const setCreateMode = () => {
-    const d: TaskEditorMode = {
+    const d: EditorMode = {
       kind: 'CreateTaskMode',
       create: ((task: Task) => {
         setTaskList(lst => [...lst, task])
@@ -53,7 +53,7 @@ export function TaskList() {
     }
 
     const task = lst[0];
-    const d: TaskEditorMode = {
+    const d: EditorMode = {
       kind: 'EditTaskMode',
       task: task,
       deleteTask: () => deleteTask(taskId),
