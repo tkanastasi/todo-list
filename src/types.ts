@@ -14,4 +14,4 @@ export type BTask = {
   storyPoints: number;
 }
 
-export type Task = ID & BTask
+export type Task = ID & BTask;

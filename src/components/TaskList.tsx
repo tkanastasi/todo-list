@@ -1,8 +1,4 @@
 import { useState, useRef, useEffect } from 'react'
-
-// TODO App.css is a really good place?
-import '../App.css'
-
 import { Task, ID } from './../types'
 import { ModalTaskEditor, EditorMode } from './ModalTaskEditor';
 import { FrustrationLevel } from './FrustrationLevel';
@@ -10,14 +6,14 @@ import { initialTaskList } from '../taskDataset';
 import { EditorModeSetters, TaskListActions, compareTask, getEditorModeSetters, getTaskListActions } from './_taskList';
 
 export function TaskList() {
-  const [taskList, setTaskList] = useState<Task[]>(initialTaskList)
+  const [taskList, setTaskList] = useState<Task[]>(initialTaskList);
   const [taskFocus, setTaskFocus] = useState<ID|null>(null);
   const [taskEditorMode, setTaskEditorMode] = useState<EditorMode|null>(null);
 
   const taskListActions: TaskListActions = getTaskListActions(taskList, setTaskList);
   const {setCreateMode, setEditMode}: EditorModeSetters = getEditorModeSetters(taskListActions,
-                                                                    setTaskEditorMode,
-                                                                    setTaskFocus)
+                                                          setTaskEditorMode,
+                                                          setTaskFocus)
     
   const tbodyRef = useRef<HTMLTableSectionElement>(null);
   useEffect(() => {
@@ -37,7 +33,7 @@ export function TaskList() {
         {/* Task Creation Button and Frustration Panel */}
         <div className="row">
           <div className="col">
-            <button className="btn btn-info bordered" onClick={setCreateMode}>Create New Task</button>
+            <button className="btn btn-info bordered bold" onClick={setCreateMode}>Create New Task</button>
           </div>
         </div>
 

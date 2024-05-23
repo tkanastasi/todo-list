@@ -20,7 +20,7 @@ export type TaskListActions = {
 }
 
 export function getTaskListActions(taskList: Task[], 
-                                   setTaskList: (update: Task[]) => void): TaskListActions {
+                setTaskList: (update: Task[]) => void): TaskListActions {
   return {
     deleteTask: (({ id }) => {
       const newTasks = taskList.filter(t => (t.id !== id));
@@ -33,13 +33,13 @@ export function getTaskListActions(taskList: Task[],
         id: Date.now(),
       };
 
-      const newTasks = [...taskList, task]
-      setTaskList(newTasks)
-      return task
+      const newTasks = [...taskList, task];
+      setTaskList(newTasks);
+      return task;
     }),
 
     editTask: ((update) => {
-      console.log(`update: ${update.id} ${update.description}`)
+      console.log(`update: ${update.id} ${update.description}`);
       const newTasks = taskList.map(t => (t.id === update.id ? update : t));
       setTaskList(newTasks);
     }),
@@ -47,9 +47,8 @@ export function getTaskListActions(taskList: Task[],
     searchByID: (({ id }) => {
       const lst = taskList.filter(task => task.id === id);
       if (lst.length == 0) {
-        return null
+        return null;
       }
-
       return lst[0];
     })
   }
@@ -61,28 +60,27 @@ export type EditorModeSetters = {
 }
 
 export function getEditorModeSetters(taskListActions: TaskListActions,
-                                     setTaskEditorMode: (mode: EditorMode | null) => void,
-                                     setTaskFocus: (task: ID) => void): EditorModeSetters {
+                setTaskEditorMode: (mode: EditorMode | null) => void,
+                setTaskFocus: (task: ID) => void): EditorModeSetters {
 
-  const hideEditorWindow = () => setTaskEditorMode(null)
+  const hideEditorWindow = () => setTaskEditorMode(null);
   
   const setCreateMode = () => {
     const d: EditorMode = {
       kind: 'CreateTaskMode',
       create: ((task: BTask) => {
-        const id = taskListActions.createTask(task)
+        const id = taskListActions.createTask(task);
         setTaskFocus(id);
       }), 
       hide: hideEditorWindow
     };
-  
     setTaskEditorMode(d);
   };
 
   const setEditMode = (taskId: ID) => {
     const task = taskListActions.searchByID(taskId)
     if (!task) {
-      return
+      return;
     }
 
     const d: EditorMode = {
@@ -90,12 +88,11 @@ export function getEditorModeSetters(taskListActions: TaskListActions,
       task: task,
       deleteTask: () => taskListActions.deleteTask(taskId),
       save: (update: BTask) => {
-        taskListActions.editTask({ ...update, id: taskId.id})
+        taskListActions.editTask({ ...update, id: taskId.id});
         setTaskFocus(taskId);
       },
       hide: hideEditorWindow
     };
-
     setTaskEditorMode(d);
   };
 

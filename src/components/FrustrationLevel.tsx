@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { factorial, partialSums } from './_frustrationLevel';
 
 const frustrationEmojis: string[] = [
@@ -10,23 +10,13 @@ const frustrationEmojis: string[] = [
 ];
 
 type FrustrationLevelProps = {
-  temp: number
+  temp: number;
 }
 
 export const FrustrationLevel: React.FC<FrustrationLevelProps> = ({ temp }) => {
   const [frustrationBounds, setFrustrationBounds] = useState<number[]|null>(null);
-
-  // We need to prevent a doubled downloading of a random data
-  const fetchCounter = useRef<number>(0);
-
   useEffect(() => {
     const fetchData = async () => {
-      if (fetchCounter.current > 0){
-        return
-      }
-
-      fetchCounter.current++;
-
       try {
           const response = await fetch(`http://www.filltext.com/?rows=${frustrationEmojis.length - 1}&x={decimalRange|4,10}`);
           const json = await response.json();
@@ -38,7 +28,6 @@ export const FrustrationLevel: React.FC<FrustrationLevelProps> = ({ temp }) => {
           console.error('Error fetching data:', error);
       }
     };
-
     fetchData();
   }, []);
 

@@ -1,4 +1,3 @@
-// import React from 'react'
 import { Priority, BTask } from '../types'
 import React, { useState } from 'react'
 import { EditorProps, checkFields, getActions } from './_modalTaskEditor';
@@ -8,15 +7,14 @@ const storyPointOptions = [1, 2, 3, 5, 8, 13];
 
 export const ModalTaskEditor: React.FC<EditorProps> = ({ taskEditorMode }) => {
   const [formState, setFormState] = useState<BTask>(taskEditorMode.kind === 'EditTaskMode' ? 
-                                                     (taskEditorMode.task) :
-                                                     { description: "",
-                                                       priority: Priority.Low,
-                                                       storyPoints: storyPointOptions[0]
-                                                     });
+                                                    (taskEditorMode.task) :
+                                                    { description: "",
+                                                      priority: Priority.Low,
+                                                      storyPoints: storyPointOptions[0]});
 
   const priorityEntries = Object.entries(Priority) as [string, Priority][];
   const dialogTitle = taskEditorMode.kind === 'CreateTaskMode' ? 'New Task' : 'Edit Task';
-  const checkFieldResult = checkFields(formState)
+  const checkFieldResult = checkFields(formState);
   const { cancel, save, deleteTask } = getActions(taskEditorMode, formState);
 
   return (
@@ -32,7 +30,7 @@ export const ModalTaskEditor: React.FC<EditorProps> = ({ taskEditorMode }) => {
               <div className="mb-3">
                 <label htmlFor="taskDescription" className="form-label bold">Task Description</label>
                 <textarea 
-                  className="form-control" 
+                  className="form-control bordered" 
                   id="taskDescription" 
                   placeholder={checkFieldResult !== true && checkFieldResult.kind === 'DescriptionFail' ? checkFieldResult.message : ""} 
                   rows={4}
@@ -50,7 +48,7 @@ export const ModalTaskEditor: React.FC<EditorProps> = ({ taskEditorMode }) => {
                     <button
                       type="button"
                       key={value}
-                      className={`btn btn-outline-secondary me-2 ${formState.priority === value ? 'active' : ''}`}
+                      className={`btn btn-outline-secondary bordered me-2 ${formState.priority === value ? 'active' : ''}`}
                       onClick={() => setFormState(s => ({...s, priority: value}))}
                     >
                       {key} <img src={`${value}.svg`} alt={value} style={{ width: '20px' }} />
@@ -65,7 +63,7 @@ export const ModalTaskEditor: React.FC<EditorProps> = ({ taskEditorMode }) => {
                     <button
                       type="button"
                       key={point}
-                      className={`btn btn-outline-secondary me-2 ${formState.storyPoints === point ? 'active' : ''}`}
+                      className={`btn btn-outline-secondary bordered me-2 ${formState.storyPoints === point ? 'active' : ''}`}
                       onClick={() => {
                         setFormState(s => ({...s, storyPoints: point}));
                       }}
@@ -78,10 +76,10 @@ export const ModalTaskEditor: React.FC<EditorProps> = ({ taskEditorMode }) => {
             </form>
           </div>
           <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={cancel}>Cancel</button>
-            <button type="button" className="btn btn-success" onClick={save} disabled={checkFieldResult !== true}>Save</button>
+            <button type="button" className="btn btn-secondary bordered" data-bs-dismiss="modal" onClick={cancel}>Cancel</button>
+            <button type="button" className="btn btn-success bordered" onClick={save} disabled={checkFieldResult !== true}>Save</button>
             { taskEditorMode.kind === 'EditTaskMode' && 
-              <button type="button" className="btn btn-danger" onClick={deleteTask}>Delete</button> }
+              <button type="button" className="btn btn-danger bordered" onClick={deleteTask}>Delete</button> }
           </div>
         </div>
       </div>

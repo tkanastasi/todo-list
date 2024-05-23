@@ -2,13 +2,13 @@ import { BTask, Task } from "../types";
 
 type DescriptionFail = {
   kind: 'DescriptionFail';
-  message: string
+  message: string;
 }
 
 export type CheckFieldResult = true | DescriptionFail;
 
 type CreateTaskMode = {
-  kind: 'CreateTaskMode'
+  kind: 'CreateTaskMode';
   create: (t: BTask) => void;
 }
 
@@ -19,17 +19,16 @@ type EditTaskMode = {
   save: (update: BTask) => void;
 }
 
-export type EditorMode = (CreateTaskMode | EditTaskMode) & { hide: () => void }
+export type EditorMode = (CreateTaskMode | EditTaskMode) & { hide: () => void; }
 
 export type EditorProps = {
-  taskEditorMode: EditorMode
+  taskEditorMode: EditorMode;
 }
 
 export function checkFields(formState: BTask): CheckFieldResult {
   if (formState.description.trim().length === 0) {
-    return { kind: 'DescriptionFail', message: "Enter at least one symbol here"}
+    return { kind: 'DescriptionFail', message: "Enter at least one symbol here" }
   }
-
   return true;
 }
 
@@ -62,9 +61,8 @@ export function getActions(editorMode: EditorMode, formState: BTask): EditorActi
 
   const deleteTask = () => {
     if (editorMode.kind !== 'EditTaskMode') {
-      return
+      return;
     }
-    
     editorMode.deleteTask();
     editorMode.hide();
   }
