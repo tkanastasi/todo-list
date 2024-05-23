@@ -19,11 +19,7 @@ type EditTaskMode = {
   save: (update: BTask) => void;
 }
 
-type BaseT = {
-  hide: () => void;
-}
-
-export type EditorMode = (CreateTaskMode | EditTaskMode) & BaseT
+export type EditorMode = (CreateTaskMode | EditTaskMode) & { hide: () => void }
 
 export type EditorProps = {
   taskEditorMode: EditorMode
