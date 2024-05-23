@@ -85,7 +85,7 @@ export function TaskList() {
         {/* Task Creation Button and Frustration Panel */}
         <div className="row">
           <div className="col">
-            <button className="btn btn-primary" onClick={setCreateMode}>Create New Task</button>
+            <button className="btn btn-info" onClick={setCreateMode}>Create New Task</button>
           </div>
         </div>
 

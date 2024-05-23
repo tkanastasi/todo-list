@@ -21,11 +21,11 @@ function partialSums(numbers: number[]): number[] {
 }
 
 const frustrationEmojis: string[] = [
-  "frustration-1.png",
-  "frustration-2.png",
-  "frustration-3.png",
-  "frustration-4.png",
-  "frustration-5.png"
+  "frustration-1-v2.webp",
+  "frustration-2-v2.webp",
+  "frustration-3-v2.webp",
+  "frustration-4-v2.webp",
+  "frustration-5-v2.webp"
 ];
 
 type FrustrationLevelProps = {
@@ -83,7 +83,7 @@ export const FrustrationLevel: React.FC<FrustrationLevelProps> = ({ temp }) => {
       <div className="row">
         <div className="col">
         {emojiIdx !== undefined ? (
-            <img src={frustrationEmojis[emojiIdx]}/>
+            <img style={{ width: '200px' }} src={frustrationEmojis[emojiIdx]}/>
         ) : (
           <div className="spinner-border" role="status"/>
         )}
