@@ -31,15 +31,15 @@ export function TaskList() {
     <>
       <div>
         {/* Task Creation Button and Frustration Panel */}
-        <div className="row">
+        <div className="row mb-3">
           <div className="col">
             <button className="btn btn-info bordered bold" onClick={setCreateMode}>Create New Task</button>
           </div>
         </div>
 
         {/* Task Table */}
-        <div className="row mt-3">
-          <div className="col flex-grow-1">
+        <div style={{display: "flex", margin: "-10px", flexWrap: "wrap"}}>
+          <div style={{flexGrow: "1", margin: "10px", flexBasis: "min-content"}}>
             <div className="task-list-container bordered rounded">
               <table className="table table-bordered task-list-table table-striped table-hover">
                 <thead>
@@ -75,7 +75,7 @@ export function TaskList() {
               </table>
             </div>
           </div>
-          <div className="col frustration-flex">
+          <div className="frustration-flex" style={{margin: "10px"}}>
             <FrustrationLevel temp={taskList.map(t => t.storyPoints).reduce((acc, v) => acc + v, 0)}/>
           </div>
         </div>
