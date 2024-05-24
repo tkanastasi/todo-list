@@ -49,9 +49,7 @@ export function getActions(editorMode: EditorMode, formState: BTask): EditorActi
       priority: formState.priority,
       storyPoints: formState.storyPoints
     };
-
     editorMode.hide();
-
     if (editorMode.kind === 'CreateTaskMode') {
       editorMode.create(task);
     } else if (editorMode.kind === 'EditTaskMode') {

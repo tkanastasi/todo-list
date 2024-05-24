@@ -1,41 +1,45 @@
 @import url('https://fonts.googleapis.com/css2?family=Neucha&display=swap');
 
+:root {
+  --background-color-for-page: #EECC8D;
+  --background-color-for-table-w: white;
+  --font-family: 'Neucha', sans-serif;
+  --border-color: black;
+  --highlight-color: red;
+}
+
 body {
-  background-color: #EECC8D;
-  font-family: 'Neucha', sans-serif;
+  background-color: var(--background-color-for-page);
+  font-family: var(--font-family);
 }
 
 .bold {
   font-weight: 600;
 }
 .bordered {
-  border: 2px solid black;
+  border: 2px solid var(--border-color);
 }
 
 .frustration-container {
   font-size: 1.8em;
-  background-color: white; 
+  background-color: var(--background-color-for-table-w);
 }
-
 .frustration-devider {
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid var(--border-color);
   margin: 0px;
   padding: 0px;
 }
-
 .frustration-image {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 200px;
 }
-
 .frustration-padding {
   padding-left: 10px;
 }
-
 .frustration-flex {
-  flex: 0 0 300px
+  flex: 0 0 300px;
 }
 
 .task-list-container {
@@ -43,21 +47,18 @@ body {
   overflow-y: auto;
   min-width: 450px;
 }
-
 .task-list-table {
   table-layout: fixed;
   margin: 0px;
 }
-
 .task-list-table thead th {
   position: sticky;
   top: 0;
-  background: white;
+  background: var(--background-color-for-table-w);
   z-index: 1;
   text-align: center;
-  box-shadow: inset 0 -2px 0 #000;
+  box-shadow: inset 0 -2px 0 var(--border-color);
 }
-
 .table thead th:nth-child(1) {
   width: 40px;
 }
@@ -76,13 +77,12 @@ body {
 
 @keyframes borderHighlight {
   0% {
-    border: 2px solid red;
+    border: 2px solid var(--highlight-color);
   }
   100% {
     border: 2px solid transparent;
   }
 }
-
 .task-list-table tbody tr.highlight {
   animation: borderHighlight 1s ease-in-out;
 }

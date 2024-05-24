@@ -9,9 +9,8 @@ const frustrationEmojis: string[] = [
   "frustration-5-v2.webp"
 ];
 
-type FrustrationLevelProps = {
-  temp: number;
-}
+type FrustrationLevelProps = { temp: number; }
+type FetchDataResponse = { x: string }[];
 
 export const FrustrationLevel: React.FC<FrustrationLevelProps> = ({ temp }) => {
   const [frustrationBounds, setFrustrationBounds] = useState<number[]|null>(null);
@@ -19,7 +18,7 @@ export const FrustrationLevel: React.FC<FrustrationLevelProps> = ({ temp }) => {
     const fetchData = async () => {
       try {
           const response = await fetch(`http://www.filltext.com/?rows=${frustrationEmojis.length - 1}&x={decimalRange|4,10}`);
-          const json = await response.json();
+          const json: FetchDataResponse = await response.json();
 
           const rNumbers: number[] = json.map((item: { x: string }) => parseFloat(item.x));
           const array = partialSums(rNumbers.sort((a, b) => a - b));
